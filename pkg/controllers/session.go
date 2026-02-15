@@ -549,7 +549,7 @@ func (c *SessionController) reconcileService(ctx context.Context, session *v1alp
 				WithAnnotations(map[string]string{
 					// Try to support popular service LoadBalancer implementation
 					// sharing key annotations.
-					"lbipam.cilium.io/sharing-key":        c.LBSharingKey,
+					"io.cilium/lb-ipam-sharing-key":        c.LBSharingKey,
 					"metallb.universe.tf/allow-shared-ip": c.LBSharingKey,
 				}).
 				WithLabels(
@@ -1014,6 +1014,9 @@ func (c *SessionController) reconcilePod(ctx context.Context, session *v1alpha1t
 
 	// Apply HostIPC setting to the pod spec if requested by any sidecar policy
 	podToCreate.Spec.HostIPC = podHostIPC
+	if user.Spec.RuntimeClassName != nil {
+		podToCreate.Spec.RuntimeClassName = user.Spec.RuntimeClassName
+	}
 
 	podToCreate.Spec.Containers = append(podToCreate.Spec.Containers,
 		corev1.Container{
