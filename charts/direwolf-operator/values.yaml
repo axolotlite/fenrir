@@ -96,7 +96,7 @@ service:
     controller: moonlight_proxy
     type: LoadBalancer
     annotations:
-      lbipam.cilium.io/sharing-key: direwolf
+      io.cilium/lb-ipam-sharing-key: direwolf
       "metallb.universe.tf/allow-shared-ip": "direwolf"
     ports:
       http:
