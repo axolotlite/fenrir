@@ -1,10 +1,11 @@
 package v1alpha1
 
 import (
-	v1 "k8s.io/api/core/v1"
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+// App is a Games on Whales container that uses wolf's sockets to stream to the user
 // +kubebuilder:object:root=true
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -37,78 +38,26 @@ type AppSpec struct {
 	// PNG image of the app
 	AppAssetWebP []byte `json:"appAssetWebP" xml:"-"`
 
+	// DeviceClassName is the Kubernetes DRA DeviceClass used for wolf
+	// resource claims when running this app.
 	// +kubebuilder:validation:Optional
-	// +kubebuilder:validation:X-kubernetes-preserve-unknown-fields:true
-	Template *v1.PodTemplateSpec `json:"template" xml:"-"`
+	// +kubebuilder:default="default-wolf"
+	DeviceClassName string `json:"deviceClassName,omitempty"`
 
-	// Unstructured wolf configuration for app to be merged with the default
-	// configuration
+	// The pod manifest for the application, it defines the pod
 	// +kubebuilder:validation:Optional
 	// +kubebuilder:pruning:PreserveUnknownFields
-	WolfConfig WolfConfig `json:"wolfConfig" xml:"-"`
+	Template corev1.PodTemplateSpec `json:"template" xml:"-"`
 
-	// A template for a PersistentVolumeClaim to be created for the app's
-	// home directory. If provided, the operator will create a PVC from
-	// this template and mount it at /home/retro.
-	// If not provided, an emptyDir volume will be used.
-	// all other volumes must be defined in the pod template's spec.volumes field.
+	// A template for a PersistentVolumeClaim to be created for the app
+	// If provided, the operator will include them in the pvc
+	// must also be defined in the pod template's spec.volumes field.
 	// +kubebuilder:validation:Optional
-	VolumeClaimTemplate *v1.PersistentVolumeClaimTemplate `json:"volumeClaimTemplate,omitempty" xml:"-"`
+	// +kubebuilder:pruning:PreserveUnknownFields
+	VolumeClaimTemplates []corev1.PersistentVolumeClaim `json:"volumeClaimTemplates,omitempty"  xml:"-"`
 }
 
-// TODO so I can easily find it
-// This entire implementation needs a rework
-// It'll be modified later to better inject env vars and configs.
-type RuntimeWolfVariables struct {
-	// RenderNode specifies the filepath to the DRM render node device.
-	// Wolf defaults to: "/dev/dri/renderD128"
-	// +kubebuilder:validation:Optional
-	// +kubebuilder:default="/dev/dri/renderD128"
-	RenderNode string `json:"renderNode,omitempty""`
-	
-	// Time zone for the wolf container
-	// +kubebuilder:validation:Optional
-	// +kubebuilder:default=UTC
-	TimeZone string `json:"timeZone,omitempty"`
-
-	// Logging level for wolf.
-	// +kubebuilder:validation:Optional
-	// +kubebuilder:validation:Enum=ERROR;WARNING;INFO;DEBUG;TRACE
-	// +kubebuilder:default:="DEBUG"
-	LogLevel string `json:"logLevel,omitempty"`
-
-}
-
-type WolfConfig struct {
-	StartAudioServer       *bool `json:"startAudioServer,omitempty" toml:"start_audio_server,omitempty"`
-	StartVirtualCompositor *bool `json:"startVirtualCompositor,omitempty" toml:"start_video_compositor,omitempty"`
-
-	Title string `json:"title,omitempty" toml:"title,omitempty"`
-	ID    string `json:"id,omitempty" toml:"id,omitempty"`
-
-	Audio *WolfStreamConfig `json:"audio,omitempty" toml:"audio,omitempty"`
-	Video *WolfStreamConfig `json:"video,omitempty" toml:"video,omitempty"`
-
-	Runner *WolfRunnerConfig `json:"runner,omitempty" toml:"runner,omitempty"`
-	
-	// Additional wolf configs to use.
-	// +kubebuilder:validation:Optional
-	RuntimeVariables *RuntimeWolfVariables `json:"runtimeVariables,omitempty"`
-}
-
-type WolfStreamConfig struct {
-	// +kubebuilder:validation:Optional
-	Source string `json:"source,omitempty" toml:"source,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	Sink string `json:"sink,omitempty" toml:"sink,omitempty"`
-}
-
-type WolfRunnerConfig struct {
-	Type       string `json:"type,omitempty" toml:"type,omitempty"`
-	RunCommand string `json:"runCommand,omitempty" toml:"run_cmd,omitempty"`
-}
-
+// AppList
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type AppList struct {
 	metav1.TypeMeta `json:",inline"`

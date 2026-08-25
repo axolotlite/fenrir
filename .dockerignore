@@ -7,3 +7,5 @@ images/
 hack/
 poc.svg
 README.md
+Makefile
+renovate.json

@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://github.com/games-on-whales/fenrir/raw/refs/heads/main/schemas/direwolf.games-on-whales.github.io/profile_v1alpha1.json
+apiVersion: direwolf.games-on-whales.github.io/v1alpha1
+kind: Profile
+metadata:
+  name: default
+  namespace: direwolf-dev
+spec:
+  apps:
+  - name: firefox
+  - name: firefox-2
+  pairings:
+  - name: "1ca62e79255d652d6e9cc84e24c9743d23916f34149d183473fd1b18e32a0de1"

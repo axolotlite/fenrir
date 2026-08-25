@@ -4,7 +4,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// Represents a Session CRD.
+// Session CRD represents a user's session, TODO: DRA update
 // +kubebuilder:object:root=true
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -20,7 +20,7 @@ type Session struct {
 	Status SessionStatus `json:"status"`
 }
 
-// A session refers to a certain user playing a specific game with a specific
+// SessionSpec refers to a certain user playing a specific game with a specific
 // client. This object is meant to live for the duration of the user's session.
 //
 // A session is created in response to a user's /launch request.
@@ -35,7 +35,7 @@ type Session struct {
 // A session is created when moonlight calls /launch to launch a game.
 type SessionSpec struct {
 	//+kubebuilder:validation:Required
-	UserReference UserReference `json:"userReference"`
+	ProfileReference ProfileReference `json:"profileReference"`
 
 	//+kubebuilder:validation:Required
 	GameReference GameReference `json:"gameReference"`
@@ -51,9 +51,11 @@ type SessionSpec struct {
 
 	// Wolf-specific config for the session
 	Config SessionInfo `json:"config"`
+	// Lobbyname is used for binding session to a node's lobby
+	LobbyName string `json:"lobbyName"`
 }
 
-// Session State machine
+// SessionStatus is the session State machine
 // Pending -> Initializing -> WaitForPing -> Streaming -> Ended
 type SessionStatus struct {
 	// Represents the observations of a session's state.
@@ -70,10 +72,13 @@ type SessionStatus struct {
 	WolfSessionID string `json:"wolfSessionID,omitempty"`
 	StreamURL     string `json:"streamURL,omitempty"`
 
-	DeploymentName string `json:"deploymentName,omitempty"`
-	ServiceName    string `json:"serviceName,omitempty"`
+	StatefulSetName string `json:"statefulSetName,omitempty"`
+	ServiceName     string `json:"serviceName,omitempty"`
+	NodeName        string `json:"nodeName,omitempty"`
+	StreamStarted   bool   `json:"streamStarted,omitempty"`
 }
 
+// SessionList is a list containing the sessions
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type SessionList struct {
 	metav1.TypeMeta `json:",inline"`
@@ -102,9 +107,12 @@ type SessionInfo struct {
 
 	//+kubebuilder:validation:Required
 	SurroundAudioFlags int `json:"surroundAudioFlags,omitempty"`
+
+	//+kubebuilder:validation:Required
+	ClientSettings *ClientSettings `json:"clientSettings,omitempty"`
 }
 
-// Each session will have 4 ports allocated to it on the shared gateway.
+// SessionPorts are 4 ports allocated to it on the shared gateway.
 // Using port forward allows us to avoid the need for a separate IP per session
 // or a relay which could add latency to the stream.
 type SessionPorts struct {

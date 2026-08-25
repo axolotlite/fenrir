@@ -1,0 +1,141 @@
+---
+# TODO: FIgure out a better way for ip address handling
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: direwolf
+  namespace: direwolf-dev
+  labels:
+    app: direwolf
+    component: moonlight-proxy
+  annotations:
+    "lbipam.cilium.io/sharing-key": "direwolf"
+    "metallb.universe.tf/allow-shared-ip": "direwolf"
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.89.1.240
+  selector:
+    app: direwolf
+    component: moonlight-proxy
+  ports:
+    - name: https
+      protocol: TCP
+      port: 47984
+    - name: http
+      protocol: TCP
+      port: 47989
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: direwolf-moonlight-proxy-dev
+  namespace: direwolf-dev
+  labels:
+    app: direwolf
+    component: moonlight-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: direwolf
+      component: moonlight-proxy
+  template:
+    metadata:
+      labels:
+        app: direwolf
+        component: moonlight-proxy
+    spec:
+      serviceAccountName: direwolf-moonlight-proxy
+      containers:
+        - name: moonlight-proxy
+          # Dev image for use with skaffold
+          image: direwolf-moonlight-dev
+          imagePullPolicy: IfNotPresent
+          # args:
+          # - --tls-cert=/etc/certs/server.crt
+          # - --tls-key=/etc/certs/server.key
+          ports:
+          - containerPort: 47984
+          - containerPort: 47989
+          env:
+          # Useful for debugging pairing to skip constant PIN screens.
+          # Requires modified moonlight client.
+          # - name: HARDCODED_PIN
+          #   value: "1111"
+          - name: APP_NAME
+            value: moonlight-proxy
+          - name: SERVER_CERT
+            value: /etc/certs/server.crt
+          - name: SERVER_KEY
+            value: /etc/certs/server.key
+          - name: ALLOWED_HOSTS
+            value: ""
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          # resources:
+          #   requests:
+          #     cpu: 100m
+          #     memory: 128Mi
+          #   limits:
+          #     cpu: 250m
+          #     memory: 256Mi
+          volumeMounts:
+          - name: certs
+            mountPath: /etc/certs
+            readOnly: true
+      volumes:
+      - name: certs
+        configMap:
+          name: direwolf-certs
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: direwolf-moonlight-proxy
+  namespace: direwolf-dev
+  labels:
+    app: direwolf
+    component: direwolf-moonlight-proxy
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: direwolf-moonlight-proxy
+  namespace: direwolf-dev
+  labels:
+    app: direwolf
+    component: direwolf-moonlight-proxy
+rules:
+- apiGroups: ["direwolf.games-on-whales.github.io"]
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["direwolf.games-on-whales.github.io"]
+  resources: ["pairings", "sessions", "lobbies"]
+  verbs: ["create", "delete", "patch", "update", "get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: direwolf-moonlight-proxy
+  namespace: direwolf-dev
+  labels:
+    app: direwolf
+    component: direwolf-moonlight-proxy
+subjects:
+- kind: ServiceAccount
+  name: direwolf-moonlight-proxy
+  namespace: direwolf-dev
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: direwolf-moonlight-proxy

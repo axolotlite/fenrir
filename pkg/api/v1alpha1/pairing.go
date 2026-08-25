@@ -4,7 +4,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// Represents a Pairing CRD.
+// Pairing Represents a user device's information.
 // A pairing CRD is created when a client pairs with the server. It represents
 // an association between a Moonlight client and a user.
 //
@@ -25,12 +25,11 @@ type PairingSpec struct {
 	ClientCertPEM string `json:"clientCertPEM,omitempty"`
 
 	//+kubebuilder:validation:Required
-	UserReference UserReference `json:"userReference,omitempty"`
-}
+	Username string `json:"username,omitempty"`
 
-type UserReference struct {
-	//+kubebuilder:validation:Required
-	Name string `json:"name,omitempty"`
+	// +kubebuilder:default={controllersOverride: {"AUTO"}, motionControllerOverride: "AUTO", mouseAcceleration: 1, hScrollAcceleration: 1, vScrollAcceleration: 1}
+	// +optional
+	ClientSettings *ClientSettings `json:"clientSettings,omitempty"`
 }
 
 type GameReference struct {
@@ -50,9 +49,20 @@ type GatewayReference struct {
 	Namespace string `json:"namespace,omitempty"`
 }
 
+// PairingList contains the paired devices
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type PairingList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []Pairing `json:"items"`
+}
+
+// ClientSettings is the client configuration for the session
+// each client can configure their own controller and acceleration
+type ClientSettings struct {
+	ControllersOverride      []string `json:"controllersOverride,omitempty"`
+	MotionControllerOverride string   `json:"motionControllerOverride,omitempty"`
+	MouseAcceleration        float64  `json:"mouseAcceleration,omitempty"`
+	HScrollAcceleration      float64  `json:"hScrollAcceleration,omitempty"`
+	VScrollAcceleration      float64  `json:"vScrollAcceleration,omitempty"`
 }
