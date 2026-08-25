@@ -14,7 +14,6 @@ import (
 
 type Client interface {
 	AddSession(ctx context.Context, session Session) (string, error)
-	AddApp(ctx context.Context, app App) error
 	StopSession(ctx context.Context, sessionID string) error
 	ListSessions(ctx context.Context) ([]Session, error)
 	ListApps(ctx context.Context) ([]App, error)
