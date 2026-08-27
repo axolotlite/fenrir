@@ -454,13 +454,11 @@ func (c *LobbyController) reconcileStatefulSet(ctx context.Context, lobby *direw
 		})
 		volumeClaimTemplates = append(volumeClaimTemplates, claim)
 	}
-
-	podToCreate.Spec.ResourceClaims = []corev1.PodResourceClaim{
-		{
-			Name:              "lobby",
-			ResourceClaimName: &claimName,
-		},
-	}
+	// Append the lobby ResourceClaim instead of deleting the resource claims
+	podToCreate.Spec.ResourceClaims = append(podToCreate.Spec.ResourceClaims, corev1.PodResourceClaim{
+		Name:              "lobby",
+		ResourceClaimName: &claimName,
+	})
 	for i := range podToCreate.Spec.Containers {
 		podToCreate.Spec.Containers[i].Resources.Claims = append(
 			podToCreate.Spec.Containers[i].Resources.Claims,
