@@ -431,7 +431,7 @@ func (c *LobbyController) reconcileStatefulSet(ctx context.Context, lobby *direw
 	podToCreate.Labels["app"] = "direwolf-worker" //nolint
 	podToCreate.Labels[direwolfv1alpha1.LabelApp] = lobby.Spec.AppReference.Name
 	podToCreate.Labels[direwolfv1alpha1.LabelProfile] = lobby.Spec.ProfileReference.Name
-	podToCreate.Spec.TerminationGracePeriodSeconds = ptr.To[int64](3)
+	// podToCreate.Spec.TerminationGracePeriodSeconds = ptr.To[int64](3)
 
 	var volumeClaimTemplates []corev1.PersistentVolumeClaim
 	for _, template := range app.Spec.VolumeClaimTemplates {
