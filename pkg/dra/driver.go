@@ -631,9 +631,9 @@ func (d *Driver) buildWolfSession(session *direwolfv1alpha1.Session, rtspFakeIP 
 			RunUID:                   1000,
 		},
 	}
-	if d.defaultAppID != "" {
-		sess.AppID = d.defaultAppID
-	}
+	// if d.defaultAppID != "" {
+	// 	sess.AppID = d.defaultAppID
+	// }
 	return sess
 }
 
