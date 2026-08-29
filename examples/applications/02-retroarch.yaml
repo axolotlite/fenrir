@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://github.com/games-on-whales/fenrir/raw/refs/heads/main/schemas/direwolf.games-on-whales.github.io/app_v1alpha1.json
+apiVersion: direwolf.games-on-whales.github.io/v1alpha1
+kind: App
+metadata:
+  name: retroarch
+  namespace: direwolf-dev
+spec:
+  appAssetWebP: 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
+  id: 2
+  isHDRSupported: false
+  title: Retroarch
+  # In case you created a new device class and need to set it on the
+  # created lobby / statefulset
+  deviceClassName: default-wolf
+  volumeClaimTemplates:
+  - metadata:
+      name: retro-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      # storageClassName: piraeus-disk-nvme
+      resources:
+        requests:
+          storage: 3Gi
+  template:
+    spec:
+      resourceClaims:
+      - name: amd-gpu
+        resourceClaimName: shared-amd-gpu
+      containers:
+      - name: app
+        image: ghcr.io/games-on-whales/retroarch:edge
+        env:
+        - name: RUN_SWAY
+          value: "1"
+        volumeMounts:
+        - name: retro-data
+          mountPath: /home/retro
+        resources:
+          limits:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          requests:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          claims:
+          - name: amd-gpu

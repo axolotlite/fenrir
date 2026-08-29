@@ -1,0 +1,57 @@
+---
+apiVersion: direwolf.games-on-whales.github.io/v1alpha1
+kind: App
+metadata:
+  name: xfce
+  namespace: direwolf-dev
+spec:
+  appAssetWebP: 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
+  id: 7
+  isHDRSupported: false
+  title: XFCE
+  # In case you created a new device class and need to set it on the
+  # created lobby / statefulset
+  deviceClassName: default-wolf
+  volumeClaimTemplates:
+  - metadata:
+      name: xfce-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: piraeus-disk-nvme
+      # storageClassName: piraeus-disk-nvme
+      resources:
+        requests:
+          storage: 3Gi
+  template:
+    spec:
+      resourceClaims:
+      - name: amd-gpu
+        resourceClaimName: shared-amd-gpu
+      volumes:
+        - name: media
+          hostPath:
+            path: /var/mnt/media-volume/
+            type: Directory
+      containers:
+      - name: app
+        image: ghcr.io/games-on-whales/xfce:edge
+        env:
+        - name: RUN_SWAY
+          value: "1"
+        volumeMounts:
+        - name: xfce-data
+          mountPath: /home/retro
+        - name: media
+          mountPath: /media
+        resources:
+          limits:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          requests:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          claims:
+          - name: amd-gpu

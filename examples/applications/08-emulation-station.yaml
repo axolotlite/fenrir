@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://github.com/games-on-whales/fenrir/raw/refs/heads/main/schemas/direwolf.games-on-whales.github.io/app_v1alpha1.json
+apiVersion: direwolf.games-on-whales.github.io/v1alpha1
+kind: App
+metadata:
+  name: emulation-station
+  namespace: direwolf-dev
+spec:
+  appAssetWebP: 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
+  id: 8
+  isHDRSupported: false
+  title: EmulationStation
+  # In case you created a new device class and need to set it on the
+  # created lobby / statefulset
+  deviceClassName: default-wolf
+  volumeClaimTemplates:
+  - metadata:
+      name: es-de-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      # storageClassName: piraeus-disk-nvme
+      resources:
+        requests:
+          storage: 1Gi
+  template:
+    spec:
+      resourceClaims:
+      - name: amd-gpu
+        resourceClaimName: shared-amd-gpu
+      containers:
+      - name: app
+        image: ghcr.io/games-on-whales/es-de:edge
+        env:
+        - name: MOZ_ENABLE_WAYLAND
+          value: "1"
+        volumeMounts:
+        - name: es-de-data
+          mountPath: /home/retro
+        resources:
+          limits:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          requests:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          claims:
+          - name: amd-gpu

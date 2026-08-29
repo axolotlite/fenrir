@@ -1,0 +1,85 @@
+---
+#This is based off of: https://github.com/shrinedogg/biggs.dog/blob/4c5b4fd931ddcfbfe341ff821b87ff659a5ba4c0/clusters/cluster1/kubernetes/apps/dreamcast/fenrir/app/apps.yaml
+---
+# yaml-language-server: $schema=https://github.com/games-on-whales/fenrir/raw/refs/heads/main/schemas/direwolf.games-on-whales.github.io/app_v1alpha1.json
+apiVersion: direwolf.games-on-whales.github.io/v1alpha1
+kind: App
+metadata:
+  name: steam
+  namespace: direwolf-dev
+spec:
+  appAssetWebP: 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
+  id: 3
+  isHDRSupported: false
+  title: Steam
+  # In case you created a new device class and need to set it on the
+  # created lobby / statefulset
+  deviceClassName: default-wolf
+  volumeClaimTemplates:
+  - metadata:
+      name: steam-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      # storageClassName: piraeus-disk-nvme
+      resources:
+        requests:
+          storage: 15Gi
+  template:
+    spec:
+      # Additional mounts to the statefulset pod
+      volumes:
+      - name: media
+        hostPath:
+          path: /var/mnt/media-volume/
+          type: Directory
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 4Gi
+      containers:
+      - name: app
+      # Keeping those here for later
+      # will most likely run into issues while trying to play games on steam
+        # securityContext:
+        #   privileged: true
+        #   capabilities:
+        #     add:
+        #       [
+        #         "SYS_ADMIN",
+        #         "SYS_NICE",
+        #         "SYS_PTRACE",
+        #         "NET_RAW",
+        #         "MKNOD",
+        #         "NET_ADMIN",
+        #       ]
+        #   seccompProfile:
+        #     type: Unconfined
+        #   appArmorProfile:
+        #     type: Unconfined
+        #   allowPrivilegeEscalation: true
+        #   runAsUser: 0
+        #   runAsGroup: 0
+        image: ghcr.io/games-on-whales/steam:edge
+        env:
+        - name: RUN_SWAY
+          value: "1"
+        - name: PROTON_LOG
+          value: "1"
+        volumeMounts:
+        - name: steam-data
+          mountPath: /home/retro
+        # Otherwise steam get stuck in a crashloop
+        - name: dshm
+          mountPath: /dev/shm
+        resources:
+          limits:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          requests:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          claims:
+          - name: amd-gpu

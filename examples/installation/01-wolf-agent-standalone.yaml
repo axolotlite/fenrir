@@ -1,0 +1,268 @@
+# This is the GPU attached to the wolf container
+# In order to allow it to render
+# You will still need to give the applications their own gpu
+# or have them share this with wolf.
+---
+apiVersion: resource.k8s.io/v1
+kind: ResourceClaim
+metadata:
+  name: shared-amd-gpu
+  namespace: direwolf-dev
+spec:
+  devices:
+    requests:
+      - name: gpu
+        exactly:
+          deviceClassName: gpu.amd.com
+          allocationMode: ExactCount
+          count: 1
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: wolf-dra
+  namespace: direwolf-dev
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: wolf-dra
+rules:
+  # DRA: ResourceSlice publishing (framework requirement)
+  - apiGroups: ["resource.k8s.io"]
+    resources: ["resourceslices"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # DRA: claim read access (framework + driver)
+  - apiGroups: ["resource.k8s.io"]
+    resources: ["resourceclaims"]
+    verbs: ["get", "list", "watch"]
+
+  # DRA: claim status patches (lobby_id writeback)
+  - apiGroups: ["resource.k8s.io"]
+    resources: ["resourceclaims/status"]
+    verbs: ["patch", "update"]
+
+  # DRA: class lookup (ParseClaimParams)
+  - apiGroups: ["resource.k8s.io"]
+    resources: ["deviceclasses"]
+    verbs: ["get"]
+
+  # Session informer + status writeback
+  - apiGroups: ["direwolf.games-on-whales.github.io"]
+    resources: ["sessions"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["direwolf.games-on-whales.github.io"]
+    resources: ["sessions/status"]
+    verbs: ["update", "patch"]
+
+  # Node IP discovery
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: wolf-dra
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: wolf-dra
+subjects:
+  - kind: ServiceAccount
+    name: wolf-dra
+    namespace: direwolf-dev
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wolf-agent
+  namespace: direwolf-dev
+  labels:
+    app: wolf-agent
+    # l2-node: talos-t26-9yi
+    # l2-zone: zone-a
+  annotations:
+    "lbipam.cilium.io/sharing-key": "direwolf"
+    "metallb.universe.tf/allow-shared-ip": "direwolf"
+spec:
+  type: LoadBalancer
+  # externalTrafficPolicy: Cluster
+  selector:
+    app: "wolf-agent-dev"
+  ports:
+    - name: rtsp
+      protocol: TCP
+      port: 48010
+    - name: rtsp-2
+      protocol: UDP
+      port: 48010
+    - name: idk
+      protocol: UDP
+      port: 48000
+    - name: control
+      protocol: UDP
+      port: 47999
+    - name: videortp
+      protocol: UDP
+      port: 48100
+    - name: audiortp
+      protocol: UDP
+      port: 48200
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: wolf-agent-dev
+  name: wolf-agent-dev
+  namespace: direwolf-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wolf-agent-dev
+  template:
+    metadata:
+      labels:
+        app: wolf-agent-dev
+    spec:
+      serviceAccountName: wolf-dra
+      # GPU claim
+      resourceClaims:
+      - name: amd-gpu
+        resourceClaimName: shared-amd-gpu
+      volumes:
+      - emptyDir: {}
+        name: wolf-sock
+      - name: plugins-dir
+        hostPath:
+          path: /var/lib/kubelet/plugins
+          type: DirectoryOrCreate
+      - name: plugins-registry
+        hostPath:
+          path: /var/lib/kubelet/plugins_registry
+          type: DirectoryOrCreate
+      - name: sockets-dir
+        hostPath:
+          path: /var/run/wolf-sockets
+          type: DirectoryOrCreate
+      - name: cdi-dir
+        hostPath:
+          path: /var/run/cdi
+          type: DirectoryOrCreate
+      - name: wolf-cfg
+        configMap:
+          name: wolf-cfg
+          defaultMode: 0755
+      - name: direwolf-certs
+        configMap:
+          name: direwolf-certs
+          defaultMode: 0600
+      containers:
+      # TODO change this to wolf-dra once development is underway 
+      - image: ghcr.io/axolotlite/fenrir/wolf-agent@sha256:a4f3056abea36c185ec6a5320ce880e6dc4a57a6dd1b64181008bb5048154553
+        name: wolf-agent-dev
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: LOG_LEVEL
+          value: "5"
+        - name: APP_NAME
+          value: wolf-agent
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_UID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.uid
+        - name: DRIVER_NAME
+          value: wolf.dra.io
+        - name: SOCKETS_DIR
+          value: /var/run/wolf-sockets
+        - name: WOLF_SOCKET_PATH
+          value: /etc/wolf/wolf.sock
+        - name: MAX_WAYLAND_SOCKETS
+          value: "10"
+        - name: QUEUE_TIMEOUT_SECONDS
+          value: "30"
+        # - name: WOLF_DRA_ENABLE_SSE
+        #   value: "true"
+        - name: TLS_CERT
+          value: /etc/wolf/cfg/server.crt
+        - name: TLS_KEY
+          value: /etc/wolf/cfg/server.key
+        volumeMounts:
+        - mountPath: /etc/wolf
+          name: wolf-sock
+        - name: plugins-dir
+          mountPath: /var/lib/kubelet/plugins
+        - name: plugins-registry
+          mountPath: /var/lib/kubelet/plugins_registry
+        - name: sockets-dir
+          mountPath: /var/run/wolf-sockets
+        - name: cdi-dir
+          mountPath: /var/run/cdi
+        - name: direwolf-certs
+          mountPath: /etc/wolf/cfg/server.crt
+          subPath: server.crt
+          readOnly: true
+        - name: direwolf-certs
+          mountPath: /etc/wolf/cfg/server.key
+          subPath: server.key
+          readOnly: true
+      ## The stable image as of time of this commit
+      - image: ghcr.io/games-on-whales/wolf:sha-d6d41de
+        name: wolf
+        imagePullPolicy: IfNotPresent
+        env:
+        # This is where the wayland & pulseaudio sockets will be created
+        - name: XDG_RUNTIME_DIR
+          value: /var/run/wolf-sockets
+        # - name: WOLF_LOG_LEVEL
+        #   value: DEBUG
+        # - name: RUST_LOG
+        #   value: INFO
+        - name: TZ
+          value: UTC
+        - name: WOLF_SOCKET_PATH
+          value: /etc/wolf/wolf.sock
+        volumeMounts:
+        - name: sockets-dir
+          mountPath: /var/run/wolf-sockets
+        - mountPath: /etc/wolf
+          name: wolf-sock
+        - name: wolf-cfg
+          mountPath: /etc/wolf/cfg/config.toml
+          subPath: config.toml
+          readOnly: false
+        - name: direwolf-certs
+          mountPath: /etc/wolf/cfg/server.crt
+          subPath: server.crt
+          readOnly: true
+        - name: direwolf-certs
+          mountPath: /etc/wolf/cfg/server.key
+          subPath: server.key
+          readOnly: true
+        resources:
+          limits:
+            cpu: "2"
+            devic.es/uinput: "1"
+            memory: 2G
+          requests:
+            cpu: "2"
+            devic.es/uinput: "1"
+            memory: 2G
+          # GPU claim
+          claims:
+          - name: amd-gpu

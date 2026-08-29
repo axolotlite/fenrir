@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://github.com/games-on-whales/fenrir/raw/refs/heads/main/schemas/direwolf.games-on-whales.github.io/app_v1alpha1.json
+apiVersion: direwolf.games-on-whales.github.io/v1alpha1
+kind: App
+metadata:
+  name: kodi
+  namespace: direwolf-dev
+spec:
+  appAssetWebP: UklGRs4MAABXRUJQVlA4IMIMAACQsACdASpYAiADPpFIoUylpCMiIHKIWLASCWlu4XUzll68B70KNvnInAbaTnqPRt/md9p3pzIwPGX9I7RP890LvrKQzRz/sO0z865R1kbiL0sUzTxxfXXsIfzDqDfuX7GYK3Bjb7fb7fb7fb7fb7fb7fb7fb7fbVynDhw4cOHDhw4cOHDhw4cPwKIHFAoFAoFAoFAoFAoFAoFAoFAmouTJIECBAgQIECBAgQIECBBvD8UtBVh0CMWiqy6BGLRVZdAjFoqsugRi0VWXJXTp06dOnTp06dOnTp06dOnUDptQgVBrbAKg1tgFQa2wCoNbYBUGtsAYwiloKsOgRi0VWXQIxaKrLoEYtFVl0CMWiqy6AVFixYsWLFixYsWLFixYsWLHhpaKrLoEYtFVl0CMWiqy6BGLRVZdAjFoqsugRXuY+DYwM876mied9TRPO+ponnfU0TzvqRwKWb7fb7fb7fb7fb7fb7fb7fb7fYMCHYmAuTJLQNDzp2BXrj3nDhAibq9Ow61iRSXjx+7copLx1MVzNXbqUuZCPf+Xy+X0qK1WrBk67Oz2v4FArWb8inz9XCJOSXbfCFHqMOgRi0VWXQIxaKrLoEYtFVl0AqLFixYsWLFixYsWLFixYsWPDS0VWXQIxaKrLoEYtFVl0CMWiqy6BGLRVZdAivc2hAqDW2AR4Lf2ueCjh2tch1rkOtch1rjlZaY/rpVfKCPVimied9TOa46J70iR4b3mo34GIg8ZyHWvg+Ea17+9ARDplMZMtSCxYsWPDS0VWXQIxaKgCzDV5+6Jpp3C0x24xG0W/4paCrDoEV7SQIECAmUjmWuPeWBI5lrjonvSQbw/FLQVYdAjExuWLjreH4DEvbiKHqMOgRi0VWXJXTp06dNlcsWhA/zZXLFoCBAgQIE5s7PV6vV56uWLjrs7RG7xGLjw6D39rSKp2hTCmied9TQl7DAn2YBYjOEtErV531NE876jZMBakFgximUjDHzRp7dHbgzTcGabgzTcGXle8Yse8F9UzyCxYsWLHhHMVdx1iR4xDRJXwTXHNcKMh5qJzmtch1egu4YZDJG+x8/yOq+PVimied/Oe9djWh+Ti+OMTpQyN2DRJ02oQKg1tgDFwM9Xq9Xq9WeAlkNchJrjthfGo9Xq9Xq9Xq9XRNHpFnyXX5b5Lx71GHK+m1CBUGtsAqDW17eHQZ6vV6vV6vV6vV6vV6vV6vV6vTp0VRYsWLFixYsWLFixYsWLHhpaKrLoEYtFVlvRuQBC7860flsFxiHAP4lBw9XQUOMjxUBNMDuii5/C1sW62XQIxaKrLoEYtDF0gsWLFim10D3slACHXHIKnNtuirRTdWJWG0yg0s8ys3AJOFQeNZ0XpAQIECBAgTm0lm3whR6jDoEQ/yhD9sfjQIQ63ySy2RXeGfpSCm7/bJUOWXEMvHUVgjFoqsugRi0VWXJYHTahAqDW2AV1mPy88cWPy3yXX5b5Lr8oSjUajUajUajUajUajUajUajUajUSlIFQa2wCoNbYBUGtsAqDW2AVBrbAKg1seECoNbYBUGtsAqDW2AVBrbAKg1tgFQa2Z+bfCFHqMOgRi0VWXQIxaKrLoEYtFVl0CMWiqx+uXC7FFyzKsEFwuxRcszMAsU0TztCFC4+muyeH4o5WPUVcToEG2loqsugRi0VWP1ypglH1ImB+1e+pEwP2r31ToLkTBbqEScku2+EKPUYdAjFoqsugRi0VWXQIxaKrLoBUWLFixYsWLFixYsWLFixYseGloqsugRi0VWXQIxaKrLoEYtFVl0CMWiqy6BFe5tCBUGtsAqDW2AVBrbAKg1tgFQa2wCoJ6qVSqVSqVSqVSqVSqVSqVSqVSqVNtpoQKg1tgFQa2wCoNbYBUGtsAqDW2AU74AD+/uwL60B//kc//qh/+N/uQIFqyJDjRdgqHfkO2L/yHGi7BUO/IdsX/kONF2FChbgAAAOJ2cTawxdabWGLrTawxdabWGLrTawxdabWGLrTawOgAACUMvAAAAAACYj8AACb1WgABhlaLWcFoRazgtCLWcFoRazgtCLWcFoRazgtCLWcGLsF0OAAAA+Bujcc602sMXWm1hi602sMXWm1hi602sMXWm1hi602x7J3DT2BKGuUhVpNlNit8HHdEpfaT9aH5uu8G6x3QPwOWksJSocH7FympmLCv7pBFKvbgauQDcIhs4XwzDA1Xls4XF+uRXGBydmNHxo4iRufEUr7dMY/AAAAVMJXAAAAAACzbkR+AAAlfJwFFLut6BMnFm/wB0p+qCn8itNCeegMCGH157NkWs4LQh+S6A+k86oYIhGTYWPCyzfK09PzjFgBBF9UY184RUJj0NbmKWNIdaPulSP/dP+1K//Gbf53c693+//MznfJPem/zsA4/FCpW84EOKBJiMdLveBfTX/f/vilItnrL0FKh7s8Y2C5aLRZsAM7iyregr4xbPsrvCDKTiC06WpkCykr+rxUjUIbjzAyYK18A0KKhJF1ftsy/bG5QKoDON7sMYrfdYQ+4KAWRRjRMBCMYCzCNcL7jLGBF8a05SQ4XWLJE0UY7tTocw0Gck/GWMJwTocw3g9c5vY7UYE8axONIVLMkh/7sQJQQR+Dd7kvAiv6ZyMDWHE2CHSKDKL9Ka0dL0TYdb0huG6xnK2zWJeBQRMBHKrbkKlq236oU2pYoCTf0n5B/j2gQLaRBAIs0bMm3MsgG6NOn50zxqtdQgQ+gxWeWbmVq7ENaHgdCBH81GhCeirM6sE+CJYwfJHoYBPyAEOkUC5+NMBeLi0Dtk3qFVgNxyhjeUsVzYk5Pp/C4zKGW4R6LqgcMbEr/MlR0vKJHkXZvOPK2J4x/i5rUMK01hpyc/8M2ZGG6tdPCV5uPSqVWjjLnlaoC2/m3FbNam8fp30gkcVLgiHCr5xYEfXz2jgXwtQUKiCpf7NyMt58SThWOKgMvtpE8fOL4j6+mzIKernM2e3UQLglHIt7sHkaLtNrdAaqtSKLee8ebPSGnDURRchc0LaY4bwo9oNsUgS+ULavgjXKh8/9k9sCAocAABZavPrTawxdabWGLrTawxdabWGLrTawxdabWGLrTZ+AAADUvUOCjIdH/iK/Z/46E+0ooP7rkCkkyJK8AW6Lh78L2YO7vpNmvhm0ZZrgt4MujPeyfwvXQ7shoVj7uzHkbg1jzSk0ayqnPauLTDtEUn6p3qBIXdVj8sdwhMsXhTrbRFVbE7Ni2lU0WTYt6+eTn+pKh7b7rss3Q1Yu/co9MBJgAEP5HL6jcsvNDTuRALz4+dpk/2dpOLzVTTX9WXBlioxCBUOmHzrm4vY53z2mueNaO08+jDgw6hOb9FX/pXTGcjra5R3p5QZBtn6H5+K7hkWuf9v7GW4N4lOfEYSbpzz9Cb1p8pA6izRVDiJH73mhwz0cRaYXjFTRG4Qouf3otfBfrFfdOBga3BMtXfwL6Qm0p+ip/9DYMNb6cUAWWxjrlloVu62skVkdy9zARe9Uca31SD+ITOaSVxye1+eBk7dEAjeMMI3ShZ5YvfSwrTxylsHkAAE27+QdGIU/OBF+ryq4y3rPSg9iCu1U6oQQY5C4Ti2u3lBytsYtPHJAchfpydQ8G1TK8AsJqC12GppwE5ive7uC1yrKVSjlcUVvlOj+JRdjid38kcuAJkTOq71xVSZN4bbbfwmJQ32SWTfB2LJrYk6DhksOdhxeUZS3kkNAG4ZLBES4QP8r++032qvQoEebU8rcuc/y93x7m8kvJQDr9xDtqmCjtpMYNVbKXtxhtXzrKJRRPAzwedSEMU0uNEaCXUm2zNpim99nthEP9PH3oQgJ/FWF8me/oG4V7M11XrMDe+GbC3R9r7nFVkaoMlmfH3xsuCmL4dUv4Z36MJtLUOOl+S33r7CDJX7miXLWt3YWttH7C2jZWxRFhWJK0mXsDtQfyLaJp2VoYgb860QATf40wT7yePep8M/gQT202Bpb/O+VRv1BDUdF83P8lNx4pbtxtRxB2zxmTC3z9y7P+mgvmxevMEguuSycOLw8IxtfGDLlXZWXagg34xLdjfzdFu4VnyJ+G2ekUgSL1rf7wO699FsaVo+GLFiDkVbwZ+1pVEXhjrDP0HYmclA0oTmyArjNY3rfjgV8uTkkSon3xN98opngv9xzms9mTVmbvA/M9o/9vBKHY7ysgFRxFZ+pKA6o5xbRlAnPb8R8PRQyGcDeEmesbXSkJfBUBodAACdKAABWPdAAA+uAJ3kzROTNFlZvAAAwdk35sc/Njn5sc/Njn5sb+YJOKg8TeziN7+7H7+7H7+7JrscU7hvhAAABzXqHAAAAAAAs25EfgAAJXwAAgY4AAATsfgAAAAAAAA==
+  id: 9
+  isHDRSupported: false
+  title: Kodi
+  # In case you created a new device class and need to set it on the
+  # created lobby / statefulset
+  deviceClassName: default-wolf
+  volumeClaimTemplates:
+  - metadata:
+      name: kodi-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      # storageClassName: piraeus-disk-nvme
+      resources:
+        requests:
+          storage: 1Gi
+  template:
+    spec:
+      resourceClaims:
+      - name: amd-gpu
+        resourceClaimName: shared-amd-gpu
+      containers:
+      - name: app
+        image: ghcr.io/games-on-whales/kodi:edge
+        env:
+        - name: RUN_SWAY
+          value: "1"
+        volumeMounts:
+        - name: kodi-data
+          mountPath: /home/retro
+        resources:
+          limits:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          requests:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          claims:
+          - name: amd-gpu

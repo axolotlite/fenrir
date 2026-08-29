@@ -1,38 +1,24 @@
 ---
-# yaml-language-server: $schema=https://github.com/games-on-whaless/fenrir/raw/refs/heads/main/schemas/direwolf.games-on-whales.github.io/profile_v1alpha1.json
+# yaml-language-server: $schema=https://github.com/games-on-whales/fenrir/raw/refs/heads/main/schemas/direwolf.games-on-whales.github.io/profile_v1alpha1.json
 apiVersion: direwolf.games-on-whales.github.io/v1alpha1
 kind: Profile
 metadata:
   name: default
-  namespace: direwolf
+  namespace: direwolf-dev
 spec:
   apps:
   - name: firefox
+  - name: retroarch
+  - name: steam
+  - name: pegasus
+  - name: lutris
+  - name: prism-launcher
+  - name: xfce
+  - name: emulation-station
+  - name: kodi
+  # After you pair your device, you need to get the pairings crds, and place their name here, then apply.
+  # This whill get you access to the applications in this profile
+  # You can add as many devices as you want to a profile
   pairings:
-  - name: ""
-  # hostPath volume for the input, this is for testing
-  volumes:
-   - name: dev-input
-     hostPath:
-       path: /dev/input
-       type: File
-   - name: host-udev
-     hostPath:
-       path: /run/udev
-       type: Directory
-  sidecarPolicies:
-    # Define policies for the 'wolf' sidecar container.
-    wolf:
-      # Define resource requests and limits.
-      # give it the GPU device via nvidia operator plugin.
-      resources:
-        requests:
-          nvidia.com/gpu: "1"
-        limits:
-          nvidia.com/gpu: "1"
-      # # Mount the hostPath volumes defined above into the 'wolf' sidecar
-      volumeMounts:
-        - name: dev-input
-          mountPath: /dev/input
-        - name: host-udev
-          mountPath: /run/udev
+  # Replace this with the results of `kubectl get pairings -n direwolf-dev`
+  - name: "1ca62e79255d652d6e9cc84e24c9743d23916f34149d183473fd1b18e32a0de1"

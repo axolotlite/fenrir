@@ -1,0 +1,11 @@
+# wolf-agent requires a hostpath mount for the kubelet
+# so we need the namespace to be privileged
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: direwolf-dev
+  labels:
+    pod-security.kubernetes.io/audit: privileged
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/warn: privileged

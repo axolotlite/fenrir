@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://github.com/games-on-whales/fenrir/raw/refs/heads/main/schemas/direwolf.games-on-whales.github.io/app_v1alpha1.json
+apiVersion: direwolf.games-on-whales.github.io/v1alpha1
+kind: App
+metadata:
+  name: firefox
+  namespace: direwolf-dev
+spec:
+  appAssetWebP: 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
+  id: 1
+  isHDRSupported: false
+  title: Firefox
+  # In case you created a new device class and need to set it on the
+  # created lobby / statefulset
+  deviceClassName: default-wolf
+  volumeClaimTemplates:
+  - metadata:
+      name: app-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      # storageClassName: piraeus-disk-nvme
+      resources:
+        requests:
+          storage: 1Gi
+  template:
+    spec:
+      resourceClaims:
+      - name: amd-gpu
+        resourceClaimName: shared-amd-gpu
+      containers:
+      - name: app
+        image: ghcr.io/games-on-whales/firefox:edge
+        env:
+        - name: RUN_SWAY
+          value: "1"
+        volumeMounts:
+        - name: app-data
+          mountPath: /home/retro
+        resources:
+          limits:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          requests:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          claims:
+          - name: amd-gpu

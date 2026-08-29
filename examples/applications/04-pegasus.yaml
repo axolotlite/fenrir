@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://github.com/games-on-whales/fenrir/raw/refs/heads/main/schemas/direwolf.games-on-whales.github.io/app_v1alpha1.json
+apiVersion: direwolf.games-on-whales.github.io/v1alpha1
+kind: App
+metadata:
+  name: pegasus
+  namespace: direwolf-dev
+spec:
+  appAssetWebP: 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
+  id: 4
+  isHDRSupported: false
+  title: Pegasus
+  # In case you created a new device class and need to set it on the
+  # created lobby / statefulset
+  deviceClassName: default-wolf
+  volumeClaimTemplates:
+  - metadata:
+      name: pegasus-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      # storageClassName: piraeus-disk-nvme
+      resources:
+        requests:
+          storage: 5Gi
+  template:
+    spec:
+      resourceClaims:
+      - name: amd-gpu
+        resourceClaimName: shared-amd-gpu
+      containers:
+      - name: app
+        image: ghcr.io/games-on-whales/pegasus:edge
+        env:
+        - name: RUN_SWAY
+          value: "1"
+        volumeMounts:
+        - name: pegasus-data
+          mountPath: /home/retro
+        resources:
+          limits:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          requests:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          claims:
+          - name: amd-gpu

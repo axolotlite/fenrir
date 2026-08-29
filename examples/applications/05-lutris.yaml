@@ -1,0 +1,62 @@
+---
+# yaml-language-server: $schema=https://github.com/games-on-whales/fenrir/raw/refs/heads/main/schemas/direwolf.games-on-whales.github.io/app_v1alpha1.json
+apiVersion: direwolf.games-on-whales.github.io/v1alpha1
+kind: App
+metadata:
+  name: lutris
+  namespace: direwolf-dev
+spec:
+  appAssetWebP: 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
+  id: 5
+  isHDRSupported: false
+  title: Lutris
+  # In case you created a new device class and need to set it on the
+  # created lobby / statefulset
+  deviceClassName: default-wolf
+  volumeClaimTemplates:
+  - metadata:
+      name: lutris-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      # storageClassName: piraeus-disk-nvme
+      resources:
+        requests:
+          storage: 15Gi
+  template:
+    spec:
+      resourceClaims:
+      - name: amd-gpu
+        resourceClaimName: shared-amd-gpu
+      volumes:
+        # Additional mounts to the statefulset pod
+        - name: media
+          hostPath:
+            path: /var/mnt/media-volume/
+            type: Directory
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 4Gi
+      containers:
+      - name: app
+        image: ghcr.io/games-on-whales/lutris:edge
+        env:
+        - name: WOLF_LUTRIS_GAMEPAD_UI_ENABLE
+          value: "0"
+        volumeMounts:
+        - name: lutris-data
+          mountPath: /home/retro
+        - name: media
+          mountPath: /media
+        resources:
+          limits:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          requests:
+            devic.es/uinput: "1"
+            cpu: 2
+            memory: 4G
+          claims:
+          - name: amd-gpu
